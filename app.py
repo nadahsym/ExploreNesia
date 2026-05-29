@@ -12,6 +12,12 @@ import pandas as pd
 import math
 
 # ──────────────────────────────────────────────
+# SPARQL ENDPOINT
+# ──────────────────────────────────────────────
+from SPARQLWrapper import SPARQLWrapper
+sparql = SPARQLWrapper("http://localhost:3030/tourism/query")
+
+# ──────────────────────────────────────────────
 # PAGE CONFIGURATION
 # ──────────────────────────────────────────────
 st.set_page_config(

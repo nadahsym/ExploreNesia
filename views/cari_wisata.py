@@ -132,7 +132,7 @@ def render_cari_wisata(_g_shared, all_cities, all_categories, min_r, max_r):
             if total_pages > 1:
                 col_pad1, col_prev, col_info, col_next, col_pad2 = st.columns([2, 1.5, 2, 1.5, 2])
                 with col_prev:
-                    if st.button("Sebelumnya", icon=":material/chevron_left:", use_container_width=True, disabled=(page_num == 1)):
+                    if st.button("Prev", icon=":material/chevron_left:", use_container_width=True, disabled=(page_num == 1)):
                         st.session_state["cari_page"] = page_num - 1
                         st.rerun()
                 with col_info:
@@ -144,7 +144,7 @@ def render_cari_wisata(_g_shared, all_cities, all_categories, min_r, max_r):
                         unsafe_allow_html=True
                     )
                 with col_next:
-                    if st.button("Selanjutnya", icon=":material/chevron_right:", use_container_width=True, disabled=(page_num == total_pages)):
+                    if st.button("Next", icon=":material/chevron_right:", use_container_width=True, disabled=(page_num == total_pages)):
                         st.session_state["cari_page"] = page_num + 1
                         st.rerun()
             else:

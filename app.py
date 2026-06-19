@@ -47,6 +47,29 @@ def get_svg_icon(name: str, clazz: str = "svg-icon") -> str:
         return svg_template.replace("{clazz}", clazz)
     return ""
 
+def get_indo_ornament(type_: str = "batik") -> str:
+    """Menghasilkan elemen dekoratif bertema Indonesia."""
+    if type_ == "batik":
+        return '''
+        <div style="display:inline-block; width:24px; height:24px; margin:0 4px; opacity:0.6;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+                <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                <path d="M8 12 Q 12 8 16 12 Q 12 16 8 12" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+            </svg>
+        </div>
+        '''
+    elif type_ == "divider":
+        return '<hr style="border:none; height:2px; background:linear-gradient(90deg, transparent, rgba(8,145,178,0.3), transparent); margin:1.5rem 0;">'
+    elif type_ == "landmark":
+        return '''
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:inline-block; width:20px; height:20px; opacity:0.5; margin:0 2px;">
+            <path d="M12 2 L8 8 L8 20 L16 20 L16 8 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="9" y="9" width="6" height="3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+        </svg>
+        '''
+    return ""
+
 # ──────────────────────────────────────────────
 # PAGE CONFIGURATION
 # ──────────────────────────────────────────────
@@ -66,7 +89,7 @@ st.markdown("""
 
 /* ══════════════════════════════════════
    CSS Variables — Light Mode (default)
-   Rasio Kontras Tinggi & Warna Harmonik
+   Indonesia-inspired Color Harmony
    ══════════════════════════════════════ */
 :root {
     --bg-primary:        #f4f6fa;
@@ -77,28 +100,31 @@ st.markdown("""
     --text-primary:      #0f172a;
     --text-secondary:    #334155;
     --text-muted:        #64748b;
-    --accent-blue:       #2563eb;
-    --accent-green:      #10b981;
-    --accent-orange:     #f59e0b;
-    --accent-purple:     #8b5cf6;
+    /* Indonesia-inspired accents */
+    --accent-blue:       #0891b2;   /* Ocean Coast */
+    --accent-green:      #15803d;   /* Forest Green */
+    --accent-orange:     #ea580c;   /* Sunset Orange */
+    --accent-purple:     #7c3aed;   /* Kept for packages */
     
     --shadow-sm:         0 1px 3px rgba(15,23,42,0.08);
     --shadow-md:         0 4px 6px -1px rgba(15,23,42,0.1), 0 2px 4px -1px rgba(15,23,42,0.06);
-    --shadow-hover:      0 12px 20px -3px rgba(37,99,235,0.12), 0 4px 6px -2px rgba(15,23,42,0.05);
+    --shadow-hover:      0 12px 20px -3px rgba(8, 145, 178, 0.12), 0 4px 6px -2px rgba(15,23,42,0.05);
     
-    --badge-city-bg:     #eff6ff;
-    --badge-city-fg:     #1e40af;
-    --badge-cat-bg:      #fffbeb;
-    --badge-cat-fg:      #92400e;
-    --badge-rating-bg:   #ecfdf5;
-    --badge-rating-fg:   #065f46;
-    --badge-price-bg:    #fdf2f8;
-    --badge-price-fg:    #9d174d;
+    /* Badge colors inspired by Indonesian landscapes */
+    --badge-city-bg:     #e0f2fe;
+    --badge-city-fg:     #0c4a6e;   /* Deep ocean */
+    --badge-cat-bg:      #fef3c7;
+    --badge-cat-fg:     #78350f;    /* Earth tone */
+    --badge-rating-bg:   #dcfce7;
+    --badge-rating-fg:   #166534;   /* Forest */
+    --badge-price-bg:    #fed7aa;
+    --badge-price-fg:    #7c2d12;   /* Spice brown */
     --icon-color:        #64748b;
 }
 
 /* ══════════════════════════════════════
    CSS Variables — Dark Mode
+   Indonesia-inspired Ocean & Forest
    ══════════════════════════════════════ */
 @media (prefers-color-scheme: dark) {
     :root {
@@ -110,23 +136,24 @@ st.markdown("""
         --text-primary:      #f8fafc;
         --text-secondary:    #cbd5e1;
         --text-muted:        #94a3b8;
-        --accent-blue:       #3b82f6;
-        --accent-green:      #34d399;
-        --accent-orange:     #fbbf24;
+        /* Indonesia-inspired dark mode */
+        --accent-blue:       #06b6d4;   /* Bright ocean */
+        --accent-green:      #4ade80;   /* Fresh forest */
+        --accent-orange:     #fb923c;   /* Warm sunset */
         --accent-purple:     #a78bfa;
         
         --shadow-sm:         0 1px 3px rgba(0,0,0,0.3);
         --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.4);
-        --shadow-hover:      0 12px 20px -3px rgba(59,130,246,0.25);
+        --shadow-hover:      0 12px 20px -3px rgba(6,182,212,0.25);
         
-        --badge-city-bg:     #1e3a8a;
-        --badge-city-fg:     #93c5fd;
+        --badge-city-bg:     #164e63;
+        --badge-city-fg:     #67e8f9;
         --badge-cat-bg:      #78350f;
         --badge-cat-fg:      #fcd34d;
-        --badge-rating-bg:   #065f46;
-        --badge-rating-fg:   #6ee7b7;
-        --badge-price-bg:    #831843;
-        --badge-price-fg:    #fbcfe8;
+        --badge-rating-bg:   #14532d;
+        --badge-rating-fg:   #86efac;
+        --badge-price-bg:    #7c2d12;
+        --badge-price-fg:    #fed7aa;
         --icon-color:        #94a3b8;
     }
 }
@@ -170,20 +197,33 @@ st.markdown("""
     --text-primary:      #0f172a;
     --text-secondary:    #334155;
     --text-muted:        #64748b;
-    --accent-blue:       #2563eb;
-    --accent-green:      #10b981;
-    --accent-orange:     #f59e0b;
-    --accent-purple:     #8b5cf6;
+    --accent-blue:       #0891b2;   /* Ocean */
+    --accent-green:      #15803d;   /* Forest */
+    --accent-orange:     #ea580c;   /* Sunset */
+    --accent-purple:     #7c3aed;
     
-    --badge-city-bg:     #eff6ff;
-    --badge-city-fg:     #1e40af;
-    --badge-cat-bg:      #fffbeb;
-    --badge-cat-fg:      #92400e;
-    --badge-rating-bg:   #ecfdf5;
-    --badge-rating-fg:   #065f46;
-    --badge-price-bg:    #fdf2f8;
-    --badge-price-fg:    #9d174d;
+    --badge-city-bg:     #e0f2fe;
+    --badge-city-fg:     #0c4a6e;
+    --badge-cat-bg:      #fef3c7;
+    --badge-cat-fg:      #78350f;
+    --badge-rating-bg:   #dcfce7;
+    --badge-rating-fg:   #166534;
+    --badge-price-bg:    #fed7aa;
+    --badge-price-fg:    #7c2d12;
     --icon-color:        #64748b;
+}
+
+/* ══════════════════════════════════════
+   Indonesian Cultural Theme Colors
+   ══════════════════════════════════════ */
+:root {
+    /* Indonesia-inspired palette: ocean blue, forest green, sunset orange, volcanic earth */
+    --indo-ocean:        #0891b2;   /* Kalimantan Coast */
+    --indo-forest:       #15803d;   /* Rainforest Green */
+    --indo-sunset:       #ea580c;   /* Sunset Orange */
+    --indo-earth:        #92400e;   /* Volcanic Soil */
+    --indo-gold:         #d97706;   /* Golden Spice */
+    --indo-coral:        #f87171;   /* Coral Red */
 }
 
 /* ── Global Styles ── */
@@ -193,8 +233,31 @@ html, body, [data-testid="stAppViewContainer"],
 [data-testid="stAppViewContainer"] > .main {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
+
+/* Background Image with Blur & Overlay */
 [data-testid="stAppViewContainer"] {
-    background: var(--bg-primary) !important;
+    background: 
+        linear-gradient(180deg, 
+            rgba(244, 246, 250, 0.92) 0%,
+            rgba(244, 246, 250, 0.88) 50%,
+            rgba(244, 246, 250, 0.92) 100%
+        ),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><filter id="blur"><feGaussianBlur in="SourceGraphic" stdDeviation="3"/></filter></defs><g opacity="0.08" filter="url(%23blur)"><path d="M0 300 Q 300 200 600 300 T 1200 300 L 1200 800 L 0 800 Z" fill="%230891b2"/><path d="M0 400 Q 300 350 600 400 T 1200 400 L 1200 800 L 0 800 Z" fill="%2315803d"/><circle cx="150" cy="250" r="120" fill="%23d97706" opacity="0.6"/><circle cx="1050" cy="150" r="150" fill="%23ea580c" opacity="0.5"/></g></svg>') center/cover fixed !important;
+    background-attachment: fixed !important;
+}
+
+/* Dark Mode Background */
+@media (prefers-color-scheme: dark) {
+    [data-testid="stAppViewContainer"] {
+        background: 
+            linear-gradient(180deg, 
+                rgba(15, 23, 42, 0.95) 0%,
+                rgba(15, 23, 42, 0.92) 50%,
+                rgba(15, 23, 42, 0.95) 100%
+            ),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><filter id="blur"><feGaussianBlur in="SourceGraphic" stdDeviation="3"/></filter></defs><g opacity="0.04" filter="url(%23blur)"><path d="M0 300 Q 300 200 600 300 T 1200 300 L 1200 800 L 0 800 Z" fill="%2338bdf8"/><path d="M0 400 Q 300 350 600 400 T 1200 400 L 1200 800 L 0 800 Z" fill="%2386efac"/><circle cx="150" cy="250" r="120" fill="%23fbbf24" opacity="0.4"/><circle cx="1050" cy="150" r="150" fill="%23fb923c" opacity="0.3"/></g></svg>') center/cover fixed !important;
+        background-attachment: fixed !important;
+    }
 }
 [data-testid="stAppViewContainer"] > .main .block-container {
     padding-top: 2rem;
@@ -267,16 +330,25 @@ label, .stRadio label, .stCheckbox label {
     margin-right: 4px !important;
 }
 
-/* ── Hero Banner ── */
+/* ── Hero Banner — Indonesian Explorer Theme ── */
 .hero-banner {
-    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 50%, #115e59 100%);
+    background: linear-gradient(135deg, #0891b2 0%, #0f172a 35%, #15803d 70%, #0f172a 100%);
     border-radius: 20px;
     padding: 2.8rem 2.8rem 2.4rem;
     margin-bottom: 2rem;
     box-shadow: 0 8px 40px rgba(0,0,0,0.15);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.hero-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><defs><pattern id="batik" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="8" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/><path d="M10 20 Q 20 10 30 20 Q 20 30 10 20" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern></defs><rect width="400" height="200" fill="url(%23batik)"/></svg>') repeat;
+    opacity: 0.4;
+    pointer-events: none;
 }
 .hero-banner::after {
     content: "";
@@ -285,7 +357,7 @@ label, .stRadio label, .stCheckbox label {
     right: -40px;
     width: 220px;
     height: 220px;
-    background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);
     pointer-events: none;
 }
 .hero-title {
@@ -298,27 +370,32 @@ label, .stRadio label, .stCheckbox label {
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
+    z-index: 1;
 }
 .hero-title svg {
-    color: #3b82f6;
+    color: #06b6d4;
     width: 32px;
     height: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 .hero-subtitle {
-    color: #93c5fd;
+    color: #cffafe;
     font-size: 1rem;
     margin: 0 0 1rem;
     font-weight: 400;
     line-height: 1.5;
     max-width: 560px;
+    position: relative;
+    z-index: 1;
 }
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(59,130,246,0.15);
-    border: 1px solid rgba(59,130,246,0.3);
-    color: #93c5fd;
+    background: rgba(6,182,212,0.15);
+    border: 1px solid rgba(6,182,212,0.4);
+    color: #cffafe;
     font-size: 0.75rem;
     padding: 5px 14px;
     border-radius: 100px;
@@ -326,6 +403,8 @@ label, .stRadio label, .stCheckbox label {
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
     margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* ── Stat Cards ── */
@@ -550,7 +629,7 @@ label, .stRadio label, .stCheckbox label {
     font-size: 0.78rem;
 }
 
-/* ── Tourism Card ── */
+/* ── Tourism Card with Indonesia-Inspired Design ── */
 .tourism-card {
     background: var(--bg-surface);
     border-radius: 16px;
@@ -558,7 +637,8 @@ label, .stRadio label, .stCheckbox label {
     margin-bottom: 1rem;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
-    border-top: 3px solid #3a86ff;
+    border-top: 3px solid var(--accent-blue);
+    border-left: 2px solid var(--accent-green);
     transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
     height: 100%;
     position: relative;
@@ -568,7 +648,7 @@ label, .stRadio label, .stCheckbox label {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(58,134,255,0.03) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(8,145,178,0.03) 0%, transparent 60%);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s;
@@ -576,7 +656,8 @@ label, .stRadio label, .stCheckbox label {
 .tourism-card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-3px);
-    border-color: rgba(58,134,255,0.3);
+    border-color: rgba(8,145,178,0.3);
+    border-top-color: var(--accent-orange);
 }
 .tourism-card:hover::before { opacity: 1; }
 .card-title {
@@ -619,16 +700,16 @@ label, .stRadio label, .stCheckbox label {
     overflow: hidden;
 }
 
-/* ── Package Card ── */
+/* ── Package Card with Ocean & Forest Gradient ── */
 .package-card {
-    background: linear-gradient(145deg, #0f2744 0%, #142038 50%, #0a3d40 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #064e3b 50%, #1e3a8a 100%);
     border-radius: 16px;
     padding: 1.4rem 1.6rem;
     color: #fff;
     height: 100%;
     box-shadow: var(--shadow-md);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(6,182,212,0.2);
     position: relative;
     overflow: hidden;
 }
@@ -639,16 +720,17 @@ label, .stRadio label, .stCheckbox label {
     right: -30px;
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, rgba(13,115,119,0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(6,182,212,0.25) 0%, transparent 70%);
     pointer-events: none;
 }
 .package-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    box-shadow: 0 12px 32px rgba(6,182,212,0.2);
+    border-color: rgba(6,182,212,0.4);
 }
 .package-city {
     font-size: 0.7rem;
-    color: #7ec8d8;
+    color: #67e8f9;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 0.4rem;
@@ -657,17 +739,30 @@ label, .stRadio label, .stCheckbox label {
 }
 .package-places {
     font-size: 0.82rem;
-    color: #c8dff0;
+    color: #cffafe;
     margin-top: 0.6rem;
     line-height: 1.7;
 }
 
-/* ── Section Headers ── */
+/* ── Section Headers with Indonesian Ornaments ── */
 .sec-header {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin: 2.5rem 0 1.2rem;
+    position: relative;
+}
+.sec-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    opacity: 0.6;
+    box-shadow: 8px 0 0 var(--accent-green), 16px 0 0 var(--accent-orange);
 }
 .sec-header h2 {
     font-size: 1.2rem;
@@ -676,12 +771,71 @@ label, .stRadio label, .stCheckbox label {
     margin: 0;
     white-space: nowrap;
     letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sec-header h2 svg {
+    color: var(--accent-blue);
 }
 .sec-line {
     flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border-color), transparent);
+    height: 2px;
+    background: linear-gradient(90deg, 
+        var(--accent-blue) 0%, 
+        var(--accent-green) 25%, 
+        var(--accent-orange) 50%, 
+        var(--accent-green) 75%, 
+        transparent 100%);
     border-radius: 2px;
+    opacity: 0.4;
+}
+
+/* ── Indonesian Ornamental Divider ── */
+.indo-divider {
+    height: 3px;
+    margin: 1.5rem 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--accent-blue) 15%, 
+        var(--accent-green) 35%, 
+        var(--accent-orange) 50%, 
+        var(--accent-green) 65%, 
+        var(--accent-blue) 85%, 
+        transparent 100%);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+
+/* ── Batik Pattern Background for Sections ── */
+.batik-section {
+    position: relative;
+}
+.batik-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="batik-fine" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="4" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/><path d="M15 25 Q 25 15 35 25 Q 25 35 15 25" fill="none" stroke="rgba(255,255,255,0.01)" stroke-width="0.3"/></pattern></defs><rect width="200" height="200" fill="url(%23batik-fine)"/></svg>') repeat;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* ── Landmark Silhouettes (decorative) ── */
+.landmark-accent {
+    position: relative;
+    display: inline-block;
+}
+.landmark-accent::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g opacity="0.15"><path d="M12 2 L16 8 L20 8 L20 20 L4 20 L4 8 L8 8 Z" fill="currentColor"/></g></svg>') no-repeat center / contain;
+    color: var(--accent-blue);
 }
 
 /* ── Pagination ── */
@@ -718,20 +872,52 @@ label, .stRadio label, .stCheckbox label {
     margin-inline: auto;
 }
 
-/* ── Footer ── */
+/* ── Footer with Indonesian Ornamental Elements ── */
 .footer {
     text-align: center;
     color: var(--text-muted);
     font-size: 0.78rem;
-    padding: 2rem 0 1.5rem;
-    border-top: 1px solid var(--border-color);
+    padding: 2.5rem 0 1.5rem;
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--accent-blue) 15%, 
+        var(--accent-green) 35%, 
+        var(--accent-orange) 50%, 
+        var(--accent-green) 65%, 
+        var(--accent-blue) 85%, 
+        transparent 100%) 1;
     margin-top: 3rem;
     line-height: 1.8;
+    position: relative;
+}
+.footer::before {
+    content: "🌴  •  🏔️  •  🌊  •  🎭  •  🌴";
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 4px;
+    opacity: 0.4;
 }
 
 /* ── Result count text ── */
 [style*="color:#666"] {
     color: var(--text-secondary) !important;
+}
+
+/* ── Smooth transitions for all interactive elements ── */
+button, input, select, textarea, [role="button"] {
+    transition: all 0.2s ease !important;
+}
+
+/* ── Animation for landscape/cultural theme ── */
+@keyframes gentle-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+}
+
+.indo-animated {
+    animation: gentle-float 3s ease-in-out infinite;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -749,24 +935,23 @@ def load_ontology_graph(path: str = "tourism_ontology.ttl") -> rdflib.Graph:
     return g
 
 def _sparql_query(query_str: str, _g: rdflib.Graph = None) -> list:
-    """
-    Eksekusi SPARQL query:
-    1. Coba ke Apache Jena Fuseki (sumber utama).
-    2. Jika gagal atau kosong, fallback ke rdflib (TTL lokal).
-    Mengembalikan list of dicts dengan key = nama variabel SPARQL.
-    """
     # ── Coba Fuseki ──
     try:
         sparql.setQuery(query_str)
         sparql.setReturnFormat(JSON)
         results = sparql.query().convert()
         bindings = results["results"]["bindings"]
-        if bindings:  # hanya return jika ada data
+        if bindings:  
+            # Tambahkan notifikasi ini!
+            st.toast("🌐 Mengambil data dari Server Apache Jena Fuseki", icon="🚀")
             return [{k: v["value"] for k, v in row.items()} for row in bindings]
     except Exception:
         pass  # Fuseki tidak tersedia
 
     # ── Fallback: rdflib ──
+    # Tambahkan notifikasi ini!
+    st.toast("📂 Server mati! Mengambil data dari file TTL lokal", icon="⚠️")
+    
     if _g is None:
         _g = load_ontology_graph()
     rows = []
@@ -972,6 +1157,9 @@ with st.sidebar:
     <div style="font-size:1.3rem; font-weight:800; color:#ffffff; margin-bottom:0.5rem; display:flex; align-items:center; gap:8px;">
         {get_svg_icon("compass")} ExploreNesia
     </div>
+    <div style="font-size:0.75rem; color:#06b6d4; letter-spacing:1px; font-family:'JetBrains Mono',monospace; margin-bottom:1rem;">
+        🌴 Eksplorasi Kekayaan Wisata Indonesia 🌴
+    </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
 
@@ -1008,6 +1196,15 @@ with st.sidebar:
         graph_filter_mode = "Semua Relasi"
         graph_sort_by = "Default"
         graph_max_nodes = 3
+
+    st.markdown("---")
+    st.markdown(
+        "<div style='font-size:0.75rem; color:rgba(200,214,232,0.45); text-align:center; font-family:JetBrains Mono,monospace;'>"
+        "🌏 ExploreNesia v1.3<br>Semantic Web Tourism Platform<br>"
+        "<span style='font-size:0.7rem;'>Discover Indonesia's Wonders</span>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
 
 # ──────────────────────────────────────────────
 # LOAD DATA AWAL — Dari TTL (sumber tunggal)
@@ -1067,6 +1264,8 @@ if page == "Beranda":
             <div class="stat-number">{avg_rating:.1f}</div>
             <div class="stat-label">{get_svg_icon("rating")} Rata-rata Rating</div>
         </div>""", unsafe_allow_html=True)
+
+    st.markdown('<div class="indo-divider"></div>', unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="sec-header">
